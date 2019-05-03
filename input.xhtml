@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <H1>XChange4U</H1>
+        <c:if test="#{serviceBean.requestedService.toString()=='CurrencyConversion'}" >
+            <h2>CURRENCY CONVERSION</h2>
+            <h:form>  
+                CONVERT
+                <h:inputText value="#{xChange4UBean.amount}"  readonly="false" required="true" requiredMessage="Conversion amount is required" validatorMessage="Conversion amount must be valid" >     
+                    <f:validateLength minimum="1" maximum="200" /><!--maximum length digits-->
+                    <f:validateRegex pattern="^[0-9]+$"/> <!-- regular expression validation for NUMBERS ONLY -->
+                </h:inputText>  
+                <P></P>
+                <h:selectOneMenu value="#{xChange4UBean.exchangeFrom}">
+                    <f:selectItem itemValue="USD" itemLabel="USD - United States Dollar" />
+                    <f:selectItem itemValue="JPY" itemLabel="JPY - Japanese yen" />
+                    <f:selectItem itemValue="EUR" itemLabel="EUR - Euro" />
+                    <f:selectItem itemValue="GBP" itemLabel="GBP - Great British Pounds" />
+                </h:selectOneMenu>
+                TO
+                <h:selectOneMenu value="#{xChange4UBean.exchangeTo}">
+                    <f:selectItem itemValue="USD" itemLabel="USD - United States Dollar" />
+                    <f:selectItem itemValue="JPY" itemLabel="JPY - Japanese yen" />
+                    <f:selectItem itemValue="EUR" itemLabel="EUR - Euro" />
+                    <f:selectItem itemValue="GBP" itemLabel="GBP - Great British Pounds" />
+                </h:selectOneMenu>
+
+
+                <h:commandButton value= "CONVERT" 
+                                 action="#{xChange4UBean.callService()}">
+                </h:commandButton>
+        </h:form>
+        <ul>
+
+        </ul>
+    </c:if>
+
+    <c:if test="#{serviceBean.requestedService.toString()=='MoneyTransfer'}" >
+        <h2>MONEY TRANSFER</h2>
+        
+        <h:form>
+            <h:panelGrid columns="2" border="0" >
+                <f:facet name="header">
+                    <h2>Money Transfer Form</h2>
+                </f:facet>
+                <h:outputText value="Name of sender" />
+                <h:inputText  value="#{xChange4UBean.senderName}" readonly="false" required="true" requiredMessage="Name of sender is required" validatorMessage="Name of sender must be valid" >
+                    <f:validateRegex pattern="^[a-zA-Z ]*$"/> <!-- regular expression validation for ALPHABET LETTERS ONLY -->
+                </h:inputText>
+                <h:outputText value="Name of reciever" />
+                <h:inputText  value="#{xChange4UBean.receiverName}" readonly="false" required="true" requiredMessage="Name of reciever is required" validatorMessage="Name of reciever must be valid" >
+                    <f:validateRegex pattern="^[a-zA-Z ]*$"/> <!-- regular expression validation for ALPHABET LETTERS ONLY -->
+                </h:inputText>
+                <h:outputText value="Origin of money" />
+                <h:inputText  value="#{xChange4UBean.originOfMoney}" readonly="false" required="true" requiredMessage="Origin of money is required" validatorMessage="Origin of money must be valid" >
+                </h:inputText>  
+                <h:outputText value="Destination of money" />
+                <h:inputText value="#{xChange4UBean.destinationOfMoney}" readonly="false" required="true" requiredMessage="Destination of money is required" validatorMessage="Destination of money must be valid" >
+                </h:inputText>  
+                <h:outputText value="Currency Conversion Rate" />
+                <h:inputText value="#{xChange4UBean.currencyConRate}" readonly="false" required="true" requiredMessage="Currency Conversion Rate is required" validatorMessage="Currency Conversion Rate must be valid" >
+                </h:inputText>  
+                <h:outputText value="Senders currency" />
+                <h:inputText value="#{xChange4UBean.senderCurrency}" readonly="false" required="true" requiredMessage="Senders currency is required" validatorMessage="Senders currency must be valid" >
+                </h:inputText>  
+                <h:outputText value="Reciept currency" />
+                <h:inputText value="#{xChange4UBean.receiverCurrency}" readonly="false" required="true" requiredMessage="Reciept currency is required" validatorMessage="Reciept currency must be valid" >                           
+                </h:inputText>  
+                <h:outputText value="Amount to be transferred" />
+                <h:inputText  value="#{xChange4UBean.amountTransfered}" readonly="false" required="true" requiredMessage="Amount to be transferred is required" validatorMessage="Amount to be transferred must be valid" >                           
+                </h:inputText>  
+                <h:outputText value="Transfer fee" />
+                <h:inputText  value="02.00%" readonly="true" required="true" requiredMessage="Transfer fee is required" validatorMessage="Transfer fee must be valid" >                           
+                </h:inputText>  
+                <h:outputText value="Amount to be recieved" />
+                <h:inputText  readonly="true" required="true" requiredMessage="Transfer fee is required" validatorMessage="Transfer fee must be valid" >                           
+                </h:inputText>  
+                <h:commandButton value="Submit" class="button" action="output" ></h:commandButton>    
+                <!--
+                </f:facet>
+                               
+                <h:outputText value="The name of the sender" />
+                <h:inputText  value="#{xChange4UBean.senderName}" readonly="false" required="true" requiredMessage="Name of sender is required" validatorMessage="Name of sender must be valid" >
+                </h:inputText>  
+                
+                <h:outputText value="The name of the reciever"/>
+                <h:inputText  value="#{xChange4UBean.receiverName}"/>
+                 
+                <h:outputText value="The origin of the money"/>
+                <h:inputText  value="#{xChange4UBean.receiverName}"/>
+                
+                <h:outputText value="The destination of the money"/>
+                <h:inputText  value="#{xChange4UBean.destinationOfMoney}"/>
+                
+                <h:outputText value="The currency conversion rate"/>
+                <h:inputText  value="#{xChange4UBean.currencyConRate}"/>
+                
+                <h:outputText value="The sender's currency"/>
+                <h:inputText  value="#{xChange4UBean.senderCurrency}"/>
+                 
+                <h:outputText value="The receiver's currency"/>
+                <h:inputText  value="#{xChange4UBean.receiverCurrency}"/>
+                 
+                <h:outputText value="The amount to be transfered"/>
+                <h:inputText  value="#{xChange4UBean.amountTransfered}"/>
+                
+                <h:outputText value="Transfer fee 2% of the transfered amount will be added"/>
+                <h:inputText  value="2% "/>
+                
+                                             
+                <p></p>
+                <h:commandButton value='TRANSFER NOW' action='output?faces-redirect=true'/>
+                
+                
+                <h:outputText value="Destination of money" />
+                <h:inputText  readonly="false" required="true" requiredMessage="Destination of money is required" validatorMessage="Destination of money must be valid" >
+                </h:inputText>  
+                <h:outputText value="Currency Conversion Rate" />
+                <h:inputText  readonly="false" required="true" requiredMessage="Currency Conversion Rate is required" validatorMessage="Currency Conversion Rate must be valid" >
+                </h:inputText>  
+                <h:outputText value="Senders currency" />
+                <h:inputText  readonly="false" required="true" requiredMessage="Senders currency is required" validatorMessage="Senders currency must be valid" >
+                </h:inputText>  
+                <h:outputText value="Reciept currency" />
+                <h:inputText  readonly="false" required="true" requiredMessage="Reciept currency is required" validatorMessage="Reciept currency must be valid" >                           
+                </h:inputText>  
+                <h:outputText value="Amount to be transferred" />
+                <h:inputText  readonly="false" required="true" requiredMessage="Amount to be transferred is required" validatorMessage="Amount to be transferred must be valid" >                           
+                </h:inputText>  
+                <h:outputText value="Amount to be received" />
+                <h:inputText  readonly="false" required="true" requiredMessage="Reciept currency is required" validatorMessage="Reciept currency must be valid" >                           
+                </h:inputText> 
+                <h:outputText value="Transfer Fee is 2" />
+                <h:inputText  readonly="false" required="true" requiredMessage="Reciept currency is required" validatorMessage="Reciept currency must be valid" >                           
+                </h:inputText> 
+                <h:outputText value="Total to to be paid" />
+                <h:inputText  readonly="false" required="true" requiredMessage="Reciept currency is required" validatorMessage="Reciept currency must be valid" >                           
+                </h:inputText> 
+                -->
+            </h:panelGrid>
+        </h:form>
+    </c:if>
+
+    <h:form> 
+        <ul>
+           <h:commandLink action= "index" value="Back" > 
+           </h:commandLink>  
+        </ul>
+        
+    </h:form>
+
+</h:body>
+</html>
+

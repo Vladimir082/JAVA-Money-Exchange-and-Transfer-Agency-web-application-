@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>xChange4U</title>
+        <h:body>
+            <H1>XChange4U</H1>
+            <c:if test="#{serviceBean.requestedService.toString()=='MoneyTransfer'}" >
+                <h2>MONEY TRANSFER</h2>
+                <h:form>
+                <h:panelGrid columns="2">
+                     
+                    Sender Name:                  <h:outputText value="#{xChange4UBean.senderName}"/>
+                   Receiver Name:                <h:outputText value="#{xChange4UBean.receiverName}"/>
+                   The origin of the money:      <h:outputText value="#{xChange4UBean.originOfMoney}"/>
+                   The destination of the money: <h:outputText value="#{xChange4UBean.destinationOfMoney}"/>
+                   The currency conversion rate: <h:outputText value="#{xChange4UBean.currencyConRate}"/>
+                   The sender's currency:        <h:outputText value="#{xChange4UBean.senderCurrency}"/>
+                   The receiver's currency:      <h:outputText value="#{xChange4UBean.receiverCurrency}"/>
+                   The amount to be transfered:  <h:outputText value="#{xChange4UBean.amountTransfered}"/>
+                   Transfer fee:                 <h:outputText value="#{xChange4UBean.transferFee}"/>
+                   The amount to be received:    <h:outputText value="#{xChange4UBean.amountReceived}"/>
+                   The total to be paid:         <h:outputText value="#{xChange4UBean.totalToBePaid}"/>
+                   <p> </p>
+                    <h:commandLink action= "index" value="Back" > 
+                    </h:commandLink>
+                   <p> </p>
+                     <h2>THANK YOU FOR USING OUR SERVICE</h2>
+                </h:panelGrid>
+            </h:form>
+            </c:if>
+
+            <c:if test="#{serviceBean.requestedService.toString()=='CurrencyConversion'}" >
+                <h2>CURRENCY CONVERSION</h2>
+                #{xChange4UBean.exchangeTo}
+                #{xChange4UBean.exchangeFrom}
+                <c:if test="#{xChange4UBean.exchangeTo=='GBP'}">
+                    £
+                </c:if>
+                <c:if test="#{xChange4UBean.exchangeTo=='JPY'}">
+                    ¥ <!--INTERNATIONAL YEN SYMBOL-->
+                </c:if>
+                <c:if test="#{xChange4UBean.exchangeTo=='EUR'}">
+                    € 
+                </c:if>
+                <c:if test="#{xChange4UBean.exchangeTo=='USD'}">
+                    $
+                </c:if>
+            </c:if>
+            
+        </h:body>
+    </h:head>
+</html>
+
